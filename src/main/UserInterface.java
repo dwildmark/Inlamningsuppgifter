@@ -34,14 +34,27 @@ public class UserInterface extends JPanel{
 		delete = new JButton("Radera");
 		searchField = new JTextField();
 		
-		setLayout(new GridLayout(1, 2));
+		Dimension leftBtns = new Dimension(180, 40);
+		openFile.setPreferredSize(leftBtns);
+		saveFile.setPreferredSize(leftBtns);
+		sort.setPreferredSize(leftBtns);
+		shuffle.setPreferredSize(leftBtns);
+		delete.setPreferredSize(leftBtns);
+		searchButton.setPreferredSize(new Dimension(80, 40));
+		searchField.setPreferredSize(new Dimension(100, 40));
+		
+		setLayout(new BorderLayout());
 		center.setLayout(new BorderLayout());
-		west.setLayout(new GridLayout(6,1));
+		west.setLayout(new FlowLayout());
 		topButtonPanel.setLayout(new GridLayout(1,7));
 		listPanel.setLayout(new GridLayout(10, 1));
-		searchPanel.setLayout(new GridLayout(1, 2));
+		searchPanel.setLayout(new BorderLayout());
 		
-		searchPanel.add(searchButton, searchField);
+		setPreferredSize(new Dimension(1850, 600));
+		west.setPreferredSize(new Dimension(200, 1000));
+		
+		searchPanel.add(searchButton, BorderLayout.WEST);
+		searchPanel.add(searchField, BorderLayout.CENTER);
 		topButtonPanel.add(title);
 		topButtonPanel.add(type);
 		topButtonPanel.add(genre);
@@ -51,15 +64,20 @@ public class UserInterface extends JPanel{
 		topButtonPanel.add(rating);
 		west.add(openFile);
 		west.add(saveFile);
+		west.add(Box.createRigidArea(new Dimension(180, 40)));
 		west.add(searchPanel);
+		west.add(Box.createRigidArea(new Dimension(180, 40)));
 		west.add(sort);
 		west.add(shuffle);
+		west.add(Box.createRigidArea(new Dimension(180, 40)));
 		west.add(delete);
 		center.add(topButtonPanel, BorderLayout.NORTH);
 		center.add(listPanel, BorderLayout.CENTER);
 		add(west, BorderLayout.WEST);		
 		add(center, BorderLayout.CENTER);
-
+		
+		Movie testMovie = new Movie("Test1", "Testttt", new String[] {"Jag", "Du"}, 3.4, "Direktor", 3.4, 1);
+		//listOfMovies.add(testMovie);
 		
 	}
 }

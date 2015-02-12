@@ -8,6 +8,7 @@ public class Main {
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(ui);
+		frame.pack();
 		frame.setVisible(true);
 	}
 }
