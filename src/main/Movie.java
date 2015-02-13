@@ -9,8 +9,9 @@ public class Movie implements Comparable<Movie>{
 	private double rating;
 	private int dvdOrBlueray;
 	
+
 	public Movie(String title, int dvdOrBlueray){
-		this(title, "ok‰nd", new String[] {"ok‰nd"}, 0.0, "ok‰nd", 0.0, dvdOrBlueray);
+		this(title, "ok√§nd", new String[] {"ok√§nd"}, 0.0, "ok√§nd", 0.0, dvdOrBlueray);
 	}
 	
 	public Movie(String title, String genre, String[] actors, double length, 
@@ -21,7 +22,7 @@ public class Movie implements Comparable<Movie>{
 		setLength(length);
 		setDirector(director);
 		setRating(rating);
-		setDvdOrBlueray(dvdOrBlueray);
+		setType(dvdOrBlueray);
 	}
 
 	public String getTitle() {
@@ -72,17 +73,18 @@ public class Movie implements Comparable<Movie>{
 		this.rating = rating;
 	}
 
-	public int isDvd() {
+	public int getType() {
 		return dvdOrBlueray;
 	}
 
-	public void setDvdOrBlueray(int dvdOrBlueray) {
+	public void setType(int dvdOrBlueray) {
 		this.dvdOrBlueray = dvdOrBlueray;
 	}
 
-//	public String toString() {
-//		
-//	}
+	public String toString() {
+		String res = getTitle() + getType();
+		return res;
+	}
 
 	public int compareTo(Movie movie) {
 		String res = "";

@@ -1,6 +1,8 @@
 package main;
 
+
 import java.awt.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -10,6 +12,7 @@ public class UserInterface extends JPanel{
 	rating, openFile, saveFile, searchButton, sort, shuffle, delete;
 	private JList<Movie> listOfMovies;
 	private JTextField searchField;
+	private ArrayList<Movie> arrMovies = new ArrayList<Movie>();
 	
 	public UserInterface(){
 		
@@ -22,13 +25,13 @@ public class UserInterface extends JPanel{
 		title = new JButton("Titel");
 		type = new JButton("Typ");
 		genre = new JButton("Genre");
-		actors = new JButton("Skådespelare");
-		length = new JButton("Längd");
-		director = new JButton("Regissör");
+		actors = new JButton("SkÃ¥despelare");
+		length = new JButton("LÃ¤ngd");
+		director = new JButton("RegissÃ¶r");
 		rating = new JButton("Betyg");
-		openFile = new JButton("Öppna fil");
+		openFile = new JButton("Ã–ppna fil");
 		saveFile = new JButton("Spara fil");
-		searchButton = new JButton("Sök:");
+		searchButton = new JButton("SÃ¶k:");
 		sort = new JButton("Sortera");
 		shuffle = new JButton("Blanda");
 		delete = new JButton("Radera");
@@ -77,7 +80,8 @@ public class UserInterface extends JPanel{
 		add(center, BorderLayout.CENTER);
 		
 		Movie testMovie = new Movie("Test1", "Testttt", new String[] {"Jag", "Du"}, 3.4, "Direktor", 3.4, 1);
-		//listOfMovies.add(testMovie);
+		arrMovies.add(testMovie);
+		//listOfMovies = new JList(testMovie);
 		
 	}
 }
