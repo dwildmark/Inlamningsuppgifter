@@ -73,6 +73,13 @@ public class Movie implements Comparable<Movie>{
 		this.rating = rating;
 	}
 
+	public String getTypeString() {
+		if(getType() == 0) {
+			return "DVD";
+		} else {
+			return "BlueRay";
+		}
+	}
 	public int getType() {
 		return dvdOrBlueray;
 	}
@@ -82,7 +89,7 @@ public class Movie implements Comparable<Movie>{
 	}
 
 	public String toString() {
-		String res = getTitle() + getType();
+		String res = getTitle() + " " + getTypeString();
 		return res;
 	}
 

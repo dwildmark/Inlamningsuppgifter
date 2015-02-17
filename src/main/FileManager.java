@@ -9,17 +9,14 @@ public class FileManager {
 		FileReader fr = new FileReader(path);
 		BufferedReader textReader = new BufferedReader(fr);
 		ArrayList<Movie> arrayList = new ArrayList<Movie>();
-		int numberOfLines = 0;
-		while (textReader.readLine() != null) {
-			numberOfLines++;
-		}
-		
+		int numberOfLines = getNbrOfLines(path);
 		String[] data = new String[numberOfLines];
 		for(int i = 0; i < numberOfLines; i++) {
 			data[i] = textReader.readLine();
 		}
 		for(int i = 0; i < data.length; i++) {
-			String[] split = data[i].split("!");
+			String[] split = new String[7];
+			split = data[i].split("!");
 			String[] actors = split[2].split("_");
 			arrayList.add(new Movie(split[0], split[1], actors, 
 					Double.parseDouble(split[3]), split[4], 
@@ -29,5 +26,34 @@ public class FileManager {
 		
 		textReader.close();
 		return arrayList;
+	}
+	
+	public int getNbrOfLines(String path) throws IOException {
+		FileReader fr = new FileReader(path);
+		BufferedReader textReader = new BufferedReader(fr);
+		int numberOfLines = 0;
+		while (textReader.readLine() != null) {
+			numberOfLines++;
+		}
+		textReader.close();
+		return numberOfLines;
+	}
+	
+	public void writeFile(String path, ArrayList<Movie> movieList) throws IOException {
+		FileWriter fw = new FileWriter(path);
+		BufferedWriter textWriter = new BufferedWriter(fw);
+		for(int i = 0; i < movieList.size(); i++) {
+			Movie currentMovie = movieList.get(i);
+			String actors = "";
+			for(int j = 0; j < currentMovie.getActors().length; j++) {
+				if(j > 0) {
+					actors += "_";
+				}
+				actors += currentMovie.getActors()[j];
+			}
+			textWriter.write(currentMovie.getTitle() + "!" + currentMovie.getGenre() + "!" +  actors + "!" + currentMovie.getLength() + "!" 
+					+ currentMovie.getDirector() + "!" + currentMovie.getRating() + "!" + currentMovie.getType() + "\n");
+		}
+		textWriter.close();
 	}
 }
