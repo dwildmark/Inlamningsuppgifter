@@ -34,17 +34,17 @@ public class UserInterface extends JPanel{
 		title = new JButton("Titel");
 		type = new JButton("Typ");
 		genre = new JButton("Genre");
-		actors = new JButton("Skådespelare");
-		length = new JButton("Längd");
-		director = new JButton("Regissör");
+		actors = new JButton("SkÃ¥despelare");
+		length = new JButton("LÃ¤ngd");
+		director = new JButton("RegissÃ¶r");
 		rating = new JButton("Betyg");
-		openFile = new JButton("Öppna fil");
+		openFile = new JButton("Ã–ppna fil");
 		saveFile = new JButton("Spara fil");
-		searchButton = new JButton("Sök:");
+		searchButton = new JButton("SÃ¶k:");
 		sort = new JButton("Sortera");
 		shuffle = new JButton("Blanda");
 		delete = new JButton("Radera");
-		addMovie = new JButton("Lägg till film");
+		addMovie = new JButton("LÃ¤gg till film");
 		searchField = new JTextField();
 		listOfMovies = new JList<String>();
 		
@@ -124,7 +124,7 @@ public class UserInterface extends JPanel{
 					try {
 						controller.openFile(file);
 					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(null, "Fel när filen öppnades. Försök igen!");
+						JOptionPane.showMessageDialog(null, "Fel nï¿½r filen ï¿½ppnades. Fï¿½rsï¿½k igen!");
 					}
 				}
 				update();
@@ -138,7 +138,7 @@ public class UserInterface extends JPanel{
 					try {
 						controller.saveFile(file);
 					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(null, "Fel när filen sparades. Försök igen!");
+						JOptionPane.showMessageDialog(null, "Fel nï¿½r filen sparades. Fï¿½rsï¿½k igen!");
 					}
 				}
 			}
