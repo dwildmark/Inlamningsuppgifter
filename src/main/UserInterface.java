@@ -2,7 +2,13 @@ package main;
 
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javafx.stage.FileChooser;
 
 import javax.swing.*;
 
@@ -45,6 +51,8 @@ public class UserInterface extends JPanel{
 		delete.setPreferredSize(leftBtns);
 		searchButton.setPreferredSize(new Dimension(80, 40));
 		searchField.setPreferredSize(new Dimension(100, 40));
+		ButtonListener btnListener = new ButtonListener(); 
+		openFile.addActionListener(btnListener);
 		
 		setLayout(new BorderLayout());
 		center.setLayout(new BorderLayout());
@@ -82,6 +90,25 @@ public class UserInterface extends JPanel{
 		Movie testMovie = new Movie("Test1", "Testttt", new String[] {"Jag", "Du"}, 3.4, "Direktor", 3.4, 1);
 		arrMovies.add(testMovie);
 		//listOfMovies = new JList(testMovie);
+		
+	}
+	
+	private class ButtonListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == openFile) {
+				JFileChooser fc = new JFileChooser();
+				FileManager fm = new FileManager();
+				int retval = fc.showOpenDialog(UserInterface.this);
+				if(retval == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					try {
+						System.out.println(fm.readFile(file).get(0).toString());
+					} catch (IOException e1) {}
+				}
+				
+			}
+		}
 		
 	}
 }

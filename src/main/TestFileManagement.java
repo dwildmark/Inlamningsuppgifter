@@ -1,7 +1,10 @@
 package main;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.swing.JFileChooser;
 
 public class TestFileManagement {
 	public static void main(String[] args) throws IOException {
@@ -13,6 +16,7 @@ public class TestFileManagement {
 		list.add(m1);
 		list.add(m2);
 		System.out.println(list.get(0).toString());
+		File file1 = JFileChooser.showOpenDialog();
 		fm.writeFile("/Users/DennisW/Documents/filmer/test1.txt", list);
 	}
 }

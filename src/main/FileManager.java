@@ -5,11 +5,12 @@ import java.util.*;
 
 public class FileManager {
 	
-	public ArrayList<Movie> readFile(String path) throws IOException {
+	public ArrayList<Movie> readFile(File file) throws IOException {
+		String path = file.toPath().toString();
 		FileReader fr = new FileReader(path);
 		BufferedReader textReader = new BufferedReader(fr);
 		ArrayList<Movie> arrayList = new ArrayList<Movie>();
-		int numberOfLines = getNbrOfLines(path);
+		int numberOfLines = getNbrOfLines(file);
 		String[] data = new String[numberOfLines];
 		for(int i = 0; i < numberOfLines; i++) {
 			data[i] = textReader.readLine();
@@ -28,7 +29,8 @@ public class FileManager {
 		return arrayList;
 	}
 	
-	public int getNbrOfLines(String path) throws IOException {
+	public int getNbrOfLines(File file) throws IOException {
+		String path = file.toPath().toString();
 		FileReader fr = new FileReader(path);
 		BufferedReader textReader = new BufferedReader(fr);
 		int numberOfLines = 0;
@@ -39,7 +41,8 @@ public class FileManager {
 		return numberOfLines;
 	}
 	
-	public void writeFile(String path, ArrayList<Movie> movieList) throws IOException {
+	public void writeFile(File file, ArrayList<Movie> movieList) throws IOException {
+		String path = file.toPath().toString();
 		FileWriter fw = new FileWriter(path);
 		BufferedWriter textWriter = new BufferedWriter(fw);
 		for(int i = 0; i < movieList.size(); i++) {
