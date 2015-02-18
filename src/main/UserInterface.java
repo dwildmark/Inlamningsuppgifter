@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javafx.stage.FileChooser;
 
@@ -18,13 +19,14 @@ public class UserInterface extends JPanel{
 	rating, openFile, saveFile, searchButton, sort, shuffle, delete, addMovie;
 	private JList<String> listOfMovies;
 	private JTextField searchField;
-//	private ArrayList<Movie> arrMovies = new ArrayList<Movie>();
+	private Comparator comp;
 	private Controller controller;
+	private boolean sortAsc;
 	
 	public UserInterface(){
 		
 		controller = new Controller();
-		
+		sortAsc = true;
 		center = new JPanel();
 		west = new JPanel();
 		topButtonPanel = new JPanel();
@@ -64,12 +66,12 @@ public class UserInterface extends JPanel{
 		saveFile.addActionListener(btnListener);
 		addMovie.addActionListener(btnListener);
 		delete.addActionListener(btnListener);
+		shuffle.addActionListener(btnListener);
 		
 		setLayout(new BorderLayout());
 		center.setLayout(new BorderLayout());
 		west.setLayout(new FlowLayout());
 		topButtonPanel.setLayout(new GridLayout(1,7));
-//		listPanel.setLayout(new GridLayout(1, 1));
 		searchPanel.setLayout(new BorderLayout());
 		
 		setPreferredSize(new Dimension(1850, 600));
@@ -131,8 +133,7 @@ public class UserInterface extends JPanel{
 				}
 				update();
 				
-			}
-			if(e.getSource() == saveFile) {
+			} else if(e.getSource() == saveFile) {
 				JFileChooser fc = new JFileChooser();
 				int result = fc.showSaveDialog(UserInterface.this);
 				if(result == JFileChooser.APPROVE_OPTION) {
@@ -143,14 +144,25 @@ public class UserInterface extends JPanel{
 						JOptionPane.showMessageDialog(null, "Fel när filen sparades. Försök igen!");
 					}
 				}
-			}
-			if(e.getSource() == addMovie) {
+			} else if(e.getSource() == addMovie) {
 				controller.addMovie();
 				update();
-			}
-			if(e.getSource() == delete) {
-				controller.removeMovie(listOfMovies.getSelectedIndex());
+			} else if(e.getSource() == delete && listOfMovies.getSelectedIndex() >= 0) {
+				controller.removeMovie(controller.getMovieList().get(listOfMovies.getSelectedIndex()));
 				update();
+			} else if(e.getSource() == shuffle) {
+				controller.shuffleList();
+				update();
+			}
+		}
+		
+	}
+	
+	private class SortingListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == title) {
+				
 			}
 		}
 		

@@ -18,8 +18,8 @@ public class Library {
 		list.add(movie);
 	}
 	
-	public void remove(int index){
-		list.remove(list.get(index));
+	public void remove(Movie movie){
+		list.remove(movie);
 	}
 	
 	public int getIndex(Movie movie){
@@ -37,6 +37,17 @@ public class Library {
 	public void addFromList(ArrayList<Movie> inList){
 		for(Iterator<Movie> it = inList.iterator(); it.hasNext();){
 			list.add((Movie)it.next());
+		}
+	}
+	
+	public void shuffle(int index) {
+		Random rand = new Random();
+		if(index < list.size()) {
+			int random = rand.nextInt(list.size());
+			Movie temp = list.get(index);
+			list.set(index, list.get(random));
+			list.set(random, temp);
+			shuffle(index + 1);
 		}
 	}
 }

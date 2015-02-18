@@ -23,8 +23,8 @@ public class Controller {
 	}
 	
 	public void addMovie() {
-		String[] messages = {"Titel:", "Genre:", "Skådespelare (separerade med ','):", 
-				"Längd:", "Regissör:", "Betyg:", "Dvd eller BlueRay (0 för Dvd, 1 för BlueRay):" };
+		String[] messages = {"Titel:", "Genre:", "SkÃ¥despelare (separerade med ', '):", 
+				"LÃ¤ngd:", "RegissÃ¶r:", "Betyg:", "Dvd eller BlueRay (0 fÃ¶r Dvd, 1 fÃ¶r BlueRay):" };
 		String[] res = new String[7];
 		for(int i = 0; i < 7; i++) {
 			res[i] = JOptionPane.showInputDialog(messages[i]);
@@ -37,11 +37,15 @@ public class Controller {
 		library.add(movie);
 	}
 	
-	public void removeMovie(int index) {
-		library.remove(index);
+	public void removeMovie(Movie movie) {
+		library.remove(movie);
 	}
 	
 	public ArrayList<Movie> getMovieList() {
 		return library.getList();
+	}
+	
+	public void shuffleList() {
+		library.shuffle(0);
 	}
 }
