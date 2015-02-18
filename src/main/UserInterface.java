@@ -47,6 +47,8 @@ public class UserInterface extends JPanel{
 		addMovie = new JButton("Lägg till film");
 		searchField = new JTextField();
 		listOfMovies = new JList<String>();
+		listOfMovies.setPreferredSize(new Dimension(1640, 600));
+		listOfMovies.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		
 		Dimension leftBtns = new Dimension(180, 40);
 		openFile.setPreferredSize(leftBtns);
@@ -124,7 +126,7 @@ public class UserInterface extends JPanel{
 					try {
 						controller.openFile(file);
 					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(null, "Fel n�r filen �ppnades. F�rs�k igen!");
+						JOptionPane.showMessageDialog(null, "Fel när filen öppnades. Försök igen!");
 					}
 				}
 				update();
@@ -138,7 +140,7 @@ public class UserInterface extends JPanel{
 					try {
 						controller.saveFile(file);
 					} catch (IOException e1) {
-						JOptionPane.showMessageDialog(null, "Fel n�r filen sparades. F�rs�k igen!");
+						JOptionPane.showMessageDialog(null, "Fel när filen sparades. Försök igen!");
 					}
 				}
 			}

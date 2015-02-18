@@ -44,6 +44,17 @@ public class Movie implements Comparable<Movie>{
 	public String[] getActors() {
 		return actors;
 	}
+	
+	public String getActorsString() {
+		String res = "";
+		for(int i = 0; i < getActors().length; i++) {
+			if( i > 0 ) {
+				res += ", ";
+			}
+			res += getActors()[i];
+		}
+		return res;
+	}
 
 	public void setActors(String[] actors) {
 		this.actors = actors;
@@ -89,7 +100,7 @@ public class Movie implements Comparable<Movie>{
 	}
 
 	public String toString() {
-		String res = getTitle() + " " + getTypeString();
+		String res = String.format("%-32s %-33s %-32s %-33s %-32s %-33s %-5s", getTitle(), getTypeString(), getGenre(), getActorsString(), getLength(), getDirector(), getRating());
 		return res;
 	}
 
