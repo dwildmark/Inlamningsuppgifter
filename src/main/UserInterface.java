@@ -15,12 +15,15 @@ import javax.swing.*;
 public class UserInterface extends JPanel{
 	private JPanel center, west, topButtonPanel, listPanel, searchPanel;
 	private JButton title, type, genre, actors, length, director, 
-	rating, openFile, saveFile, searchButton, sort, shuffle, delete;
-	private JList<Movie> listOfMovies;
+	rating, openFile, saveFile, searchButton, sort, shuffle, delete, addMovie;
+	private JList<String> listOfMovies;
 	private JTextField searchField;
-	private ArrayList<Movie> arrMovies = new ArrayList<Movie>();
+//	private ArrayList<Movie> arrMovies = new ArrayList<Movie>();
+	private Controller controller;
 	
 	public UserInterface(){
+		
+		controller = new Controller();
 		
 		center = new JPanel();
 		west = new JPanel();
@@ -31,17 +34,19 @@ public class UserInterface extends JPanel{
 		title = new JButton("Titel");
 		type = new JButton("Typ");
 		genre = new JButton("Genre");
-		actors = new JButton("SkÃ¥despelare");
-		length = new JButton("LÃ¤ngd");
-		director = new JButton("RegissÃ¶r");
+		actors = new JButton("Skådespelare");
+		length = new JButton("Längd");
+		director = new JButton("Regissör");
 		rating = new JButton("Betyg");
-		openFile = new JButton("Ã–ppna fil");
+		openFile = new JButton("Öppna fil");
 		saveFile = new JButton("Spara fil");
-		searchButton = new JButton("SÃ¶k:");
+		searchButton = new JButton("Sök:");
 		sort = new JButton("Sortera");
 		shuffle = new JButton("Blanda");
 		delete = new JButton("Radera");
+		addMovie = new JButton("Lägg till film");
 		searchField = new JTextField();
+		listOfMovies = new JList<String>();
 		
 		Dimension leftBtns = new Dimension(180, 40);
 		openFile.setPreferredSize(leftBtns);
@@ -49,16 +54,19 @@ public class UserInterface extends JPanel{
 		sort.setPreferredSize(leftBtns);
 		shuffle.setPreferredSize(leftBtns);
 		delete.setPreferredSize(leftBtns);
+		addMovie.setPreferredSize(leftBtns);
 		searchButton.setPreferredSize(new Dimension(80, 40));
 		searchField.setPreferredSize(new Dimension(100, 40));
 		ButtonListener btnListener = new ButtonListener(); 
 		openFile.addActionListener(btnListener);
+		saveFile.addActionListener(btnListener);
+		addMovie.addActionListener(btnListener);
 		
 		setLayout(new BorderLayout());
 		center.setLayout(new BorderLayout());
 		west.setLayout(new FlowLayout());
 		topButtonPanel.setLayout(new GridLayout(1,7));
-		listPanel.setLayout(new GridLayout(10, 1));
+//		listPanel.setLayout(new GridLayout(1, 1));
 		searchPanel.setLayout(new BorderLayout());
 		
 		setPreferredSize(new Dimension(1850, 600));
@@ -73,6 +81,7 @@ public class UserInterface extends JPanel{
 		topButtonPanel.add(length);
 		topButtonPanel.add(director);
 		topButtonPanel.add(rating);
+		listPanel.add(listOfMovies);
 		west.add(openFile);
 		west.add(saveFile);
 		west.add(Box.createRigidArea(new Dimension(180, 40)));
@@ -81,16 +90,26 @@ public class UserInterface extends JPanel{
 		west.add(sort);
 		west.add(shuffle);
 		west.add(Box.createRigidArea(new Dimension(180, 40)));
+		west.add(addMovie);
 		west.add(delete);
 		center.add(topButtonPanel, BorderLayout.NORTH);
 		center.add(listPanel, BorderLayout.CENTER);
 		add(west, BorderLayout.WEST);		
 		add(center, BorderLayout.CENTER);
 		
-		Movie testMovie = new Movie("Test1", "Testttt", new String[] {"Jag", "Du"}, 3.4, "Direktor", 3.4, 1);
-		arrMovies.add(testMovie);
-		//listOfMovies = new JList(testMovie);
+//		Movie testMovie = new Movie("Test1", "Testttt", new String[] {"Jag", "Du"}, 3.4, "Direktor", 3.4, 1);
+//		arrMovies.add(testMovie);
+//		//listOfMovies = new JList(testMovie);
 		
+	}
+	
+	private void update() {
+		
+		String[] content = new String[controller.getMovieList().size()];
+		for(int i = 0; i < controller.getMovieList().size(); i++) {
+			content[i] = controller.getMovieList().get(i).toString();
+		}
+		listOfMovies.setListData(content);
 	}
 	
 	private class ButtonListener implements ActionListener {
@@ -98,14 +117,35 @@ public class UserInterface extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == openFile) {
 				JFileChooser fc = new JFileChooser();
-				FileManager fm = new FileManager();
-				int retval = fc.showOpenDialog(UserInterface.this);
-				if(retval == JFileChooser.APPROVE_OPTION) {
+				int result = fc.showOpenDialog(UserInterface.this);
+				if(result == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					try {
-						System.out.println(fm.readFile(file).get(0).toString());
-					} catch (IOException e1) {}
+						controller.openFile(file);
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(null, "Fel när filen öppnades. Försök igen!");
+					}
 				}
+				update();
+				
+			}
+			if(e.getSource() == saveFile) {
+				JFileChooser fc = new JFileChooser();
+				int result = fc.showSaveDialog(UserInterface.this);
+				if(result == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					try {
+						controller.saveFile(file);
+					} catch (IOException e1) {
+						JOptionPane.showMessageDialog(null, "Fel när filen sparades. Försök igen!");
+					}
+				}
+			}
+			if(e.getSource() == addMovie) {
+				controller.addMovie();
+				update();
+			}
+			if(e.getSource() == delete) {
 				
 			}
 		}

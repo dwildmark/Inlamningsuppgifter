@@ -3,11 +3,8 @@ package main;
 import java.util.*;
 
 public class Library {
-	private ArrayList<Movie> list = new ArrayList<Movie>();
 	
-//	public Library(ArrayList<Movie> inList){
-//		list = inList;
-//	}
+	private ArrayList<Movie> list = new ArrayList<Movie>();
 	
 	public void setList(ArrayList<Movie> inList){
 		list = inList;

@@ -12,11 +12,8 @@ public class TestFileManagement {
 		Movie m2 = new Movie("TestMovie2", "Testttt", new String[] {"Jag", "Du", "Nån annan"}, 3.4, "Direktor", 3.4, 1);
 		FileManager fm = new FileManager();
 		ArrayList<Movie> list = new ArrayList<Movie>();
-		list = fm.readFile("/Users/DennisW/Documents/filmer/test1.txt");
 		list.add(m1);
 		list.add(m2);
 		System.out.println(list.get(0).toString());
-		File file1 = JFileChooser.showOpenDialog();
-		fm.writeFile("/Users/DennisW/Documents/filmer/test1.txt", list);
 	}
 }

@@ -29,7 +29,7 @@ public class FileManager {
 		return arrayList;
 	}
 	
-	public int getNbrOfLines(File file) throws IOException {
+	private int getNbrOfLines(File file) throws IOException {
 		String path = file.toPath().toString();
 		FileReader fr = new FileReader(path);
 		BufferedReader textReader = new BufferedReader(fr);
