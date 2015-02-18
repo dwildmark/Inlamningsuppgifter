@@ -18,8 +18,8 @@ public class Library {
 		list.add(movie);
 	}
 	
-	public void remove(Movie movie){
-		list.remove(movie);
+	public void remove(int index){
+		list.remove(list.get(index));
 	}
 	
 	public int getIndex(Movie movie){

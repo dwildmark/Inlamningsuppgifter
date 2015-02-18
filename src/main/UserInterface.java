@@ -61,6 +61,7 @@ public class UserInterface extends JPanel{
 		openFile.addActionListener(btnListener);
 		saveFile.addActionListener(btnListener);
 		addMovie.addActionListener(btnListener);
+		delete.addActionListener(btnListener);
 		
 		setLayout(new BorderLayout());
 		center.setLayout(new BorderLayout());
@@ -146,7 +147,8 @@ public class UserInterface extends JPanel{
 				update();
 			}
 			if(e.getSource() == delete) {
-				
+				controller.removeMovie(listOfMovies.getSelectedIndex());
+				update();
 			}
 		}
 		

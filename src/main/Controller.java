@@ -37,6 +37,10 @@ public class Controller {
 		library.add(movie);
 	}
 	
+	public void removeMovie(int index) {
+		library.remove(index);
+	}
+	
 	public ArrayList<Movie> getMovieList() {
 		return library.getList();
 	}
