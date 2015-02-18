@@ -44,9 +44,7 @@ public class Library {
 		Random rand = new Random();
 		if(index < list.size()) {
 			int random = rand.nextInt(list.size());
-			Movie temp = list.get(index);
-			list.set(index, list.get(random));
-			list.set(random, temp);
+			Sort.swap(list, index, random);
 			shuffle(index + 1);
 		}
 	}

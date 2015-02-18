@@ -19,7 +19,7 @@ public class UserInterface extends JPanel{
 	rating, openFile, saveFile, searchButton, sort, shuffle, delete, addMovie;
 	private JList<String> listOfMovies;
 	private JTextField searchField;
-	private Comparator comp;
+	private Comparator<Movie> currentComp;
 	private Controller controller;
 	private boolean sortAsc;
 	
@@ -108,6 +108,52 @@ public class UserInterface extends JPanel{
 		
 	}
 	
+	private void selectComp(String comp) {
+		switch(comp) {
+		case "title":
+			if(sortAsc)
+				currentComp = new TitleAsc();
+			else
+				currentComp = new TitleDsc();
+			break;
+			
+		case "genre":
+			if(sortAsc)
+				currentComp = new GenreAsc();
+			else
+				currentComp = new GenreDsc();
+			break;
+			
+		case "director":
+			if(sortAsc)
+				currentComp = new DirectorAsc();
+			else
+				currentComp = new DirectorDsc();
+			break;
+			
+		case "type":
+			if(sortAsc)
+				currentComp = new TypeAsc();
+			else
+				currentComp = new TypeDsc();
+			break;
+			
+		case "rating":
+			if(sortAsc)
+				currentComp = new RatingAsc();
+			else
+				currentComp = new RatingDsc();
+			break;
+		
+		case "length":
+			if(sortAsc)
+				currentComp = new LengthAsc();
+			else
+				currentComp = new LengthDsc();
+			break;
+		}
+	}
+	
 	private void update() {
 		
 		String[] content = new String[controller.getMovieList().size()];
@@ -161,7 +207,13 @@ public class UserInterface extends JPanel{
 	private class SortingListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() == title) {
+			if(e.getSource() == title) { 
+				if( currentComp instanceof TitleAsc || currentComp instanceof TitleDsc ) {
+					sortAsc = !sortAsc;
+				} else {
+					sortAsc = true;
+				}
+				
 				
 			}
 		}

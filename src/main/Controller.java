@@ -48,4 +48,8 @@ public class Controller {
 	public void shuffleList() {
 		library.shuffle(0);
 	}
+	
+	public void sort(Comparator<Movie> comp, boolean sortAsc) {
+		
+	}
 }
