@@ -41,6 +41,10 @@ public class Controller {
 		library.remove(movie);
 	}
 	
+	public void sortBubble(Comparator<Movie> comp) {
+		Sort.bubbleSort(library.getList(), comp);
+	}
+	
 	public ArrayList<Movie> getMovieList() {
 		return library.getList();
 	}

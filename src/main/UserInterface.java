@@ -61,13 +61,20 @@ public class UserInterface extends JPanel{
 		addMovie.setPreferredSize(leftBtns);
 		searchButton.setPreferredSize(new Dimension(80, 40));
 		searchField.setPreferredSize(new Dimension(100, 40));
-		ButtonListener btnListener = new ButtonListener(); 
+		ButtonListener btnListener = new ButtonListener();
+		SortingListener srtListener = new SortingListener();
 		openFile.addActionListener(btnListener);
 		saveFile.addActionListener(btnListener);
 		addMovie.addActionListener(btnListener);
 		delete.addActionListener(btnListener);
 		shuffle.addActionListener(btnListener);
-		
+		title.addActionListener(srtListener);
+		type.addActionListener(srtListener);
+		genre.addActionListener(srtListener);
+		length.addActionListener(srtListener);
+		director.addActionListener(srtListener);
+		rating.addActionListener(srtListener);
+		sort.addActionListener(btnListener);
 		setLayout(new BorderLayout());
 		center.setLayout(new BorderLayout());
 		west.setLayout(new FlowLayout());
@@ -101,6 +108,8 @@ public class UserInterface extends JPanel{
 		center.add(listPanel, BorderLayout.CENTER);
 		add(west, BorderLayout.WEST);		
 		add(center, BorderLayout.CENTER);
+		
+		currentComp = new TitleAsc();
 		
 //		Movie testMovie = new Movie("Test1", "Testttt", new String[] {"Jag", "Du"}, 3.4, "Direktor", 3.4, 1);
 //		arrMovies.add(testMovie);
@@ -192,12 +201,16 @@ public class UserInterface extends JPanel{
 				}
 			} else if(e.getSource() == addMovie) {
 				controller.addMovie();
+				controller.sortBubble(currentComp);
 				update();
 			} else if(e.getSource() == delete && listOfMovies.getSelectedIndex() >= 0) {
 				controller.removeMovie(controller.getMovieList().get(listOfMovies.getSelectedIndex()));
 				update();
 			} else if(e.getSource() == shuffle) {
 				controller.shuffleList();
+				update();
+			} else if(e.getSource() == sort) {
+				controller.sortBubble(currentComp);
 				update();
 			}
 		}
@@ -208,13 +221,59 @@ public class UserInterface extends JPanel{
 
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == title) { 
-				if( currentComp instanceof TitleAsc || currentComp instanceof TitleDsc ) {
+				if(currentComp instanceof TitleAsc || currentComp instanceof TitleDsc) {
 					sortAsc = !sortAsc;
 				} else {
 					sortAsc = true;
 				}
-				
-				
+				selectComp("title");
+				controller.sortBubble(currentComp);
+				update();
+			} else if(e.getSource() == type) {
+				if(currentComp instanceof TypeAsc || currentComp instanceof TypeDsc) {
+					sortAsc = !sortAsc;
+				} else {
+					sortAsc = true;
+				}
+				selectComp("type");
+				controller.sortBubble(currentComp);
+				update();
+			} else if(e.getSource() == genre) {
+				if(currentComp instanceof GenreAsc || currentComp instanceof GenreDsc) {
+					sortAsc = !sortAsc;
+				} else {
+					sortAsc = true;
+				}
+				selectComp("genre");
+				controller.sortBubble(currentComp);
+				update();
+			} else if(e.getSource() == director) {
+				if(currentComp instanceof DirectorAsc || currentComp instanceof DirectorDsc) {
+					sortAsc = !sortAsc;
+				} else {
+					sortAsc = true;
+				}
+				selectComp("director");
+				controller.sortBubble(currentComp);
+				update();
+			} else if(e.getSource() == length) {
+				if(currentComp instanceof LengthAsc || currentComp instanceof LengthDsc) {
+					sortAsc = !sortAsc;
+				} else {
+					sortAsc = true;
+				}
+				selectComp("length");
+				controller.sortBubble(currentComp);
+				update();
+			} else if(e.getSource() == rating) {
+				if(currentComp instanceof RatingAsc || currentComp instanceof RatingDsc) {
+					sortAsc = !sortAsc;
+				} else {
+					sortAsc = true;
+				}
+				selectComp("rating");
+				controller.sortBubble(currentComp);
+				update();
 			}
 		}
 		

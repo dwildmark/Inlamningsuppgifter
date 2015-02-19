@@ -5,6 +5,7 @@ import java.util.*;
 public class Library {
 	
 	private ArrayList<Movie> list = new ArrayList<Movie>();
+	private ArrayList<Movie> searchList = new ArrayList<Movie>();
 	
 	public void setList(ArrayList<Movie> inList){
 		list = inList;
