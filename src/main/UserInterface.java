@@ -14,7 +14,7 @@ import javafx.stage.FileChooser;
 import javax.swing.*;
 
 public class UserInterface extends JPanel{
-	private JPanel center, west, topButtonPanel, listPanel, searchPanel;
+	private JPanel center, west, topButtonPanel, listPanel, searchPanel, actorsNLength;
 	private JButton title, type, genre, actors, length, director, 
 	rating, openFile, saveFile, searchButton, sort, shuffle, delete, addMovie;
 	private JList<String> listOfMovies;
@@ -32,6 +32,7 @@ public class UserInterface extends JPanel{
 		topButtonPanel = new JPanel();
 		listPanel = new JPanel();
 		searchPanel = new JPanel();
+		actorsNLength = new JPanel();
 		
 		title = new JButton("Titel");
 		type = new JButton("Typ");
@@ -49,7 +50,7 @@ public class UserInterface extends JPanel{
 		addMovie = new JButton("Lägg till film");
 		searchField = new JTextField();
 		listOfMovies = new JList<String>();
-		listOfMovies.setPreferredSize(new Dimension(1640, 600));
+		listOfMovies.setPreferredSize(new Dimension(1190, 600));
 		listOfMovies.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		
 		Dimension leftBtns = new Dimension(180, 40);
@@ -78,21 +79,23 @@ public class UserInterface extends JPanel{
 		setLayout(new BorderLayout());
 		center.setLayout(new BorderLayout());
 		west.setLayout(new FlowLayout());
-		topButtonPanel.setLayout(new GridLayout(1,7));
+		topButtonPanel.setLayout(new GridLayout(1,6));
 		searchPanel.setLayout(new BorderLayout());
+		actorsNLength.setLayout(new GridLayout());
 		
-		setPreferredSize(new Dimension(1850, 600));
+		setPreferredSize(new Dimension(1400, 600));
 		west.setPreferredSize(new Dimension(200, 1000));
 		
 		searchPanel.add(searchButton, BorderLayout.WEST);
 		searchPanel.add(searchField, BorderLayout.CENTER);
+		actorsNLength.add(rating);
+		actorsNLength.add(length);
 		topButtonPanel.add(title);
 		topButtonPanel.add(type);
 		topButtonPanel.add(genre);
 		topButtonPanel.add(actors);
-		topButtonPanel.add(length);
 		topButtonPanel.add(director);
-		topButtonPanel.add(rating);
+		topButtonPanel.add(actorsNLength);
 		listPanel.add(listOfMovies);
 		west.add(openFile);
 		west.add(saveFile);

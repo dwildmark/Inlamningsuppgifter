@@ -100,7 +100,7 @@ public class Movie implements Comparable<Movie>{
 	}
 
 	public String toString() {
-		String res = String.format("%-32s %-33s %-32s %-33s %-32s %-33s %-5s", getTitle(), getTypeString(), getGenre(), getActorsString(), getLength(), getDirector(), getRating());
+		String res = String.format("%-28s %-28s %-27s %-28s %-28s %-13s %-11s", getTitle(), getTypeString(), getGenre(), getActorsString(), getDirector(), getRating(), getLength());
 		return res;
 	}
 

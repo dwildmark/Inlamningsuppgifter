@@ -34,6 +34,7 @@ public class Controller {
 					Double.parseDouble(res[3]), res[4], 
 					Double.parseDouble(res[5]), 
 					Integer.parseInt(res[6]));
+		
 		library.add(movie);
 	}
 	
