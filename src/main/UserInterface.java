@@ -17,6 +17,8 @@ public class UserInterface extends JPanel{
 	private JPanel center, west, topButtonPanel, listPanel, searchPanel, actorsNLength;
 	private JButton title, type, genre, actors, length, director, 
 	rating, openFile, saveFile, searchButton, sort, shuffle, delete, addMovie;
+	private JRadioButton rbQuick, rbBubble;
+	private ButtonGroup bgSorting;
 	private JList<String> listOfMovies;
 	private JTextField searchField;
 	private Comparator<Movie> currentComp;
@@ -48,6 +50,9 @@ public class UserInterface extends JPanel{
 		shuffle = new JButton("Blanda");
 		delete = new JButton("Radera");
 		addMovie = new JButton("Lägg till film");
+		rbQuick = new JRadioButton();
+		rbBubble = new JRadioButton();
+		bgSorting = new ButtonGroup();
 		searchField = new JTextField();
 		listOfMovies = new JList<String>();
 		listOfMovies.setPreferredSize(new Dimension(1190, 600));
@@ -76,6 +81,8 @@ public class UserInterface extends JPanel{
 		director.addActionListener(srtListener);
 		rating.addActionListener(srtListener);
 		sort.addActionListener(btnListener);
+		bgSorting.add(rbBubble);
+		bgSorting.add(rbQuick);
 		setLayout(new BorderLayout());
 		center.setLayout(new BorderLayout());
 		west.setLayout(new FlowLayout());
@@ -107,16 +114,15 @@ public class UserInterface extends JPanel{
 		west.add(Box.createRigidArea(new Dimension(180, 40)));
 		west.add(addMovie);
 		west.add(delete);
+		west.add(rbQuick);
+		west.add(rbBubble);
 		center.add(topButtonPanel, BorderLayout.NORTH);
 		center.add(listPanel, BorderLayout.CENTER);
 		add(west, BorderLayout.WEST);		
 		add(center, BorderLayout.CENTER);
 		
 		currentComp = new TitleAsc();
-		
-//		Movie testMovie = new Movie("Test1", "Testttt", new String[] {"Jag", "Du"}, 3.4, "Direktor", 3.4, 1);
-//		arrMovies.add(testMovie);
-//		//listOfMovies = new JList(testMovie);
+		rbQuick.setSelected(true);
 		
 	}
 	
@@ -178,6 +184,7 @@ public class UserInterface extends JPanel{
 	private class ButtonListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
+			controller.setSorter(rbQuick.isSelected());
 			if(e.getSource() == openFile) {
 				JFileChooser fc = new JFileChooser();
 				int result = fc.showOpenDialog(UserInterface.this);
@@ -204,7 +211,7 @@ public class UserInterface extends JPanel{
 				}
 			} else if(e.getSource() == addMovie) {
 				controller.addMovie();
-				controller.sortBubble(currentComp);
+				controller.sort(currentComp);
 				update();
 			} else if(e.getSource() == delete && listOfMovies.getSelectedIndex() >= 0) {
 				controller.removeMovie(controller.getMovieList().get(listOfMovies.getSelectedIndex()));
@@ -213,7 +220,7 @@ public class UserInterface extends JPanel{
 				controller.shuffleList();
 				update();
 			} else if(e.getSource() == sort) {
-				controller.sortBubble(currentComp);
+				controller.sort(currentComp);
 				update();
 			}
 		}
@@ -230,7 +237,7 @@ public class UserInterface extends JPanel{
 					sortAsc = true;
 				}
 				selectComp("title");
-				controller.sortBubble(currentComp);
+				controller.sort(currentComp);
 				update();
 			} else if(e.getSource() == type) {
 				if(currentComp instanceof TypeAsc || currentComp instanceof TypeDsc) {
@@ -239,7 +246,7 @@ public class UserInterface extends JPanel{
 					sortAsc = true;
 				}
 				selectComp("type");
-				controller.sortBubble(currentComp);
+				controller.sort(currentComp);
 				update();
 			} else if(e.getSource() == genre) {
 				if(currentComp instanceof GenreAsc || currentComp instanceof GenreDsc) {
@@ -248,7 +255,7 @@ public class UserInterface extends JPanel{
 					sortAsc = true;
 				}
 				selectComp("genre");
-				controller.sortBubble(currentComp);
+				controller.sort(currentComp);
 				update();
 			} else if(e.getSource() == director) {
 				if(currentComp instanceof DirectorAsc || currentComp instanceof DirectorDsc) {
@@ -257,7 +264,7 @@ public class UserInterface extends JPanel{
 					sortAsc = true;
 				}
 				selectComp("director");
-				controller.sortBubble(currentComp);
+				controller.sort(currentComp);
 				update();
 			} else if(e.getSource() == length) {
 				if(currentComp instanceof LengthAsc || currentComp instanceof LengthDsc) {
@@ -266,7 +273,7 @@ public class UserInterface extends JPanel{
 					sortAsc = true;
 				}
 				selectComp("length");
-				controller.sortBubble(currentComp);
+				controller.sort(currentComp);
 				update();
 			} else if(e.getSource() == rating) {
 				if(currentComp instanceof RatingAsc || currentComp instanceof RatingDsc) {
@@ -275,7 +282,7 @@ public class UserInterface extends JPanel{
 					sortAsc = true;
 				}
 				selectComp("rating");
-				controller.sortBubble(currentComp);
+				controller.sort(currentComp);
 				update();
 			}
 		}

@@ -8,10 +8,12 @@ import javax.swing.JOptionPane;
 public class Controller {
 	private Library library;
 	private FileManager fileMgr;
+	private boolean sortQuick;
 	
 	public Controller() {
 		library = new Library();
 		fileMgr = new FileManager();
+		sortQuick = true;
 	}
 	
 	public void openFile(File file) throws IOException {
@@ -42,8 +44,16 @@ public class Controller {
 		library.remove(movie);
 	}
 	
-	public void sortBubble(Comparator<Movie> comp) {
-		Sort.bubbleSort(library.getList(), comp);
+	public void setSorter(boolean quick) {
+		sortQuick = quick;
+	}
+	
+	public void sort(Comparator<Movie> comp) {
+		if(sortQuick) {
+			Sort.partitionSort(library.getList(), comp);
+		} else {
+			Sort.bubbleSort(library.getList(), comp);
+		}
 	}
 	
 	public ArrayList<Movie> getMovieList() {
