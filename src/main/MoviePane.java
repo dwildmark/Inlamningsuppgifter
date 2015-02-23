@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.*;
 
@@ -12,10 +13,9 @@ public class MoviePane extends JPanel{
 	
 	public MoviePane(Controller controller) {
 		this.controller = controller;
-		setPreferredSize(new Dimension(200, 800));
-		
 	}
 	private void initFrame() {
-		
+		setPreferredSize(new Dimension(200, 800));
+		setLayout(new GridLayout(8,1));
 	}
 }

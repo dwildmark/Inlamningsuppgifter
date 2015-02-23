@@ -1,9 +1,5 @@
 package main;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 public class Main {

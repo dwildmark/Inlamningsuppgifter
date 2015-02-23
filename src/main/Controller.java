@@ -9,11 +9,13 @@ public class Controller {
 	private Library library;
 	private FileManager fileMgr;
 	private boolean sortQuick;
+	private boolean searchBinary;
 	
 	public Controller() {
 		library = new Library();
 		fileMgr = new FileManager();
 		sortQuick = true;
+		searchBinary = true;
 	}
 	
 	public void openFile(File file) throws IOException {
@@ -48,6 +50,10 @@ public class Controller {
 		sortQuick = quick;
 	}
 	
+	public void setSearchMethod(boolean binary) {
+		searchBinary = binary;
+	}
+	
 	public void sort(Comparator<Movie> comp) {
 		if(sortQuick) {
 			Sort.partitionSort(library.getList(), comp);
@@ -58,6 +64,19 @@ public class Controller {
 	
 	public ArrayList<Movie> getMovieList() {
 		return library.getList();
+	}
+	
+	public ArrayList<Movie> getSearchList() {
+		return library.getSearchList();
+	}
+	
+	public void search(String searchString) {
+		Sort.partitionSort(library.getList(), new TitleAsc());
+		if(searchBinary) {
+			library.binarySearch(searchString);
+		} else {
+			library.linearSearch(searchString);
+		}
 	}
 	
 	public void shuffleList() {

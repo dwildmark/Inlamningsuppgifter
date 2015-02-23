@@ -4,6 +4,8 @@ package main;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public class UserInterface extends JPanel{
 	rating, openFile, saveFile, searchButton, sort, shuffle, delete, addMovie;
 	private JRadioButton rbQuick, rbBubble;
 	private ButtonGroup bgSorting;
-	private JList<String> listOfMovies;
+	private JList<Movie> listOfMovies;
 	private JTextField searchField;
 	private Comparator<Movie> currentComp;
 	private Controller controller;
@@ -50,11 +52,11 @@ public class UserInterface extends JPanel{
 		shuffle = new JButton("Blanda");
 		delete = new JButton("Radera");
 		addMovie = new JButton("Lägg till film");
-		rbQuick = new JRadioButton();
-		rbBubble = new JRadioButton();
+		rbQuick = new JRadioButton("Snabb sortering");
+		rbBubble = new JRadioButton("Bubble-sortering");
 		bgSorting = new ButtonGroup();
 		searchField = new JTextField();
-		listOfMovies = new JList<String>();
+		listOfMovies = new JList<Movie>();
 		listOfMovies.setPreferredSize(new Dimension(1190, 600));
 		listOfMovies.setFont(new Font("Monospaced", Font.PLAIN, 12));
 		
@@ -69,6 +71,7 @@ public class UserInterface extends JPanel{
 		searchField.setPreferredSize(new Dimension(100, 40));
 		ButtonListener btnListener = new ButtonListener();
 		SortingListener srtListener = new SortingListener();
+		KeyboardListener kListener = new KeyboardListener();
 		openFile.addActionListener(btnListener);
 		saveFile.addActionListener(btnListener);
 		addMovie.addActionListener(btnListener);
@@ -81,6 +84,8 @@ public class UserInterface extends JPanel{
 		director.addActionListener(srtListener);
 		rating.addActionListener(srtListener);
 		sort.addActionListener(btnListener);
+		searchButton.addActionListener(btnListener);
+		searchField.addKeyListener(kListener);
 		bgSorting.add(rbBubble);
 		bgSorting.add(rbQuick);
 		setLayout(new BorderLayout());
@@ -173,12 +178,11 @@ public class UserInterface extends JPanel{
 	}
 	
 	private void update() {
-		
-		String[] content = new String[controller.getMovieList().size()];
-		for(int i = 0; i < controller.getMovieList().size(); i++) {
-			content[i] = controller.getMovieList().get(i).toString();
-		}
-		listOfMovies.setListData(content);
+		listOfMovies.setListData(controller.getMovieList().toArray(new Movie[controller.getMovieList().size()]));
+	}
+	
+	private void updateSearch() {
+		listOfMovies.setListData(controller.getSearchList().toArray(new Movie[controller.getSearchList().size()]));
 	}
 	
 	private class ButtonListener implements ActionListener {
@@ -188,14 +192,16 @@ public class UserInterface extends JPanel{
 			if(e.getSource() == openFile) {
 				JFileChooser fc = new JFileChooser();
 				int result = fc.showOpenDialog(UserInterface.this);
+				File file = fc.getSelectedFile();
 				if(result == JFileChooser.APPROVE_OPTION) {
-					File file = fc.getSelectedFile();
 					try {
 						controller.openFile(file);
 					} catch (IOException e1) {
 						JOptionPane.showMessageDialog(null, "Fel när filen öppnades. Försök igen!");
 					}
 				}
+				Frame frame = (Frame)getTopLevelAncestor();
+				frame.setTitle(fc.getName(file));
 				update();
 				
 			} else if(e.getSource() == saveFile) {
@@ -214,7 +220,8 @@ public class UserInterface extends JPanel{
 				controller.sort(currentComp);
 				update();
 			} else if(e.getSource() == delete && listOfMovies.getSelectedIndex() >= 0) {
-				controller.removeMovie(controller.getMovieList().get(listOfMovies.getSelectedIndex()));
+				controller.removeMovie(listOfMovies.getSelectedValue());
+
 				update();
 			} else if(e.getSource() == shuffle) {
 				controller.shuffleList();
@@ -222,6 +229,9 @@ public class UserInterface extends JPanel{
 			} else if(e.getSource() == sort) {
 				controller.sort(currentComp);
 				update();
+			} else if(e.getSource() == searchButton) {
+				controller.search(searchField.getText());
+				updateSearch();
 			}
 		}
 		
@@ -230,6 +240,7 @@ public class UserInterface extends JPanel{
 	private class SortingListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
+			controller.setSorter(rbQuick.isSelected());
 			if(e.getSource() == title) { 
 				if(currentComp instanceof TitleAsc || currentComp instanceof TitleDsc) {
 					sortAsc = !sortAsc;
@@ -284,6 +295,28 @@ public class UserInterface extends JPanel{
 				selectComp("rating");
 				controller.sort(currentComp);
 				update();
+			}
+		}
+		
+	}
+	
+	private class KeyboardListener implements KeyListener {
+
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				controller.search(searchField.getText());
+				updateSearch();
 			}
 		}
 		
