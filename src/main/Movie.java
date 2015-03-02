@@ -105,7 +105,14 @@ public class Movie implements Comparable<Movie>{
 	}
 
 	public int compareTo(Movie movie) {
-		String res = "";
-		return 0;
+		if(movie.getTitle().equals(this.getTitle())) {
+			if(movie.getType() == this.getType()) {
+				return 0;
+			} else {
+				return 1;
+			}
+		} else {
+			return 1;
+		}
 	}
 }

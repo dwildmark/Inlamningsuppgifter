@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
-public class MoviePane extends JPanel implements ActionListener{
+public class EditMoviePane extends JPanel implements ActionListener{
 	private Controller controller;
 	private JPanel radioButtons;
 	private JTextField inTitle, inGenre, inDirector, inActors, inLength, inRating;
@@ -16,12 +16,14 @@ public class MoviePane extends JPanel implements ActionListener{
 	private ButtonGroup bg;
 	private JButton submitBtn;
 	private JFrame frame;
+	private Movie currentMovie;
 	private UserInterface ui;
 	
-	public MoviePane(Controller controller, JFrame frame, UserInterface ui) {
+	public EditMoviePane(Controller controller, JFrame frame, UserInterface ui, Movie movie) {
 		this.controller = controller;
 		this.frame = frame;
 		this.ui = ui;
+		currentMovie = movie;
 		initFrame();
 	}
 	private void initFrame() {
@@ -30,12 +32,12 @@ public class MoviePane extends JPanel implements ActionListener{
 		
 		radioButtons = new JPanel(new GridLayout(1, 2));
 		submitBtn = new JButton("Spara");
-		inTitle = new JTextField("Titel");
-		inGenre = new JTextField("Genre");
-		inDirector = new JTextField("Regissör");
-		inActors = new JTextField("Skådespelare");
-		inLength = new JTextField("Längd");
-		inRating = new JTextField("Betyg");
+		inTitle = new JTextField(currentMovie.getTitle());
+		inGenre = new JTextField(currentMovie.getGenre());
+		inDirector = new JTextField(currentMovie.getDirector());
+		inActors = new JTextField(currentMovie.getActorsString());
+		inLength = new JTextField(currentMovie.getLength() + "");
+		inRating = new JTextField(currentMovie.getRating() + "");
 		rbDvd = new JRadioButton("DVD");
 		rbBlueray = new JRadioButton("BlueRay");
 		bg = new ButtonGroup();
@@ -53,6 +55,11 @@ public class MoviePane extends JPanel implements ActionListener{
 		radioButtons.add(rbBlueray);
 		add(radioButtons);
 		add(submitBtn);
+		if(currentMovie.getType() == 0) {
+			rbDvd.setSelected(true);
+		} else {
+			rbBlueray.setSelected(true);
+		}
 		
 	}
 	private void submitMovie() {
@@ -71,8 +78,13 @@ public class MoviePane extends JPanel implements ActionListener{
 		} else {
 			dvdOrBlueray = 1;
 		}
-		Movie movie = new Movie(title, genre, actors, length, director, rating, dvdOrBlueray);
-		controller.addMovie(movie);
+		currentMovie.setTitle(title);
+		currentMovie.setGenre(genre);
+		currentMovie.setDirector(director);
+		currentMovie.setActors(actors);
+		currentMovie.setLength(length);
+		currentMovie.setRating(rating);
+		currentMovie.setType(dvdOrBlueray);
 		controller.sort(new TitleAsc());
 		ui.update();
 	}

@@ -19,7 +19,7 @@ public class UserInterface extends JPanel{
 	private JPanel center, west, topButtonPanel, listPanel, searchPanel, actorsNLength;
 	private JButton title, type, genre, actors, length, director, 
 	rating, openFile, saveFile, searchButton, sort, shuffle, 
-	delete, addMovie, goBack;
+	delete, addMovie, goBack, editMovie;
 	private JRadioButton rbQuick, rbBubble, rbLinear, rbBinary;
 	private ButtonGroup bgSorting, bgSearchMethod;
 	private JList<Movie> listOfMovies;
@@ -58,6 +58,7 @@ public class UserInterface extends JPanel{
 		rbBubble = new JRadioButton("Bubble-sortering");
 		rbLinear = new JRadioButton("Linjär sökning");
 		rbBinary = new JRadioButton("Binär sökning");
+		editMovie = new JButton("Redigera film");
 		bgSearchMethod = new ButtonGroup();
 		bgSorting = new ButtonGroup();
 		searchField = new JTextField();
@@ -73,6 +74,7 @@ public class UserInterface extends JPanel{
 		delete.setPreferredSize(leftBtns);
 		addMovie.setPreferredSize(leftBtns);
 		goBack.setPreferredSize(leftBtns);
+		editMovie.setPreferredSize(leftBtns);
 		searchButton.setPreferredSize(new Dimension(80, 40));
 		searchField.setPreferredSize(new Dimension(100, 40));
 		ButtonListener btnListener = new ButtonListener();
@@ -92,6 +94,7 @@ public class UserInterface extends JPanel{
 		sort.addActionListener(btnListener);
 		goBack.addActionListener(btnListener);
 		searchButton.addActionListener(btnListener);
+		editMovie.addActionListener(btnListener);
 		searchField.addKeyListener(kListener);
 		bgSorting.add(rbBubble);
 		bgSorting.add(rbQuick);
@@ -127,7 +130,8 @@ public class UserInterface extends JPanel{
 		west.add(goBack);
 		west.add(sort);
 		west.add(shuffle);
-		west.add(Box.createRigidArea(new Dimension(180, 40)));
+		//west.add(Box.createRigidArea(new Dimension(180, 40)));
+		west.add(editMovie);
 		west.add(addMovie);
 		west.add(delete);
 		west.add(rbQuick);
@@ -190,7 +194,7 @@ public class UserInterface extends JPanel{
 		}
 	}
 	
-	private void update() {
+	public void update() {
 		listOfMovies.setListData(controller.getMovieList().toArray(new Movie[controller.getMovieList().size()]));
 	}
 	
@@ -229,9 +233,12 @@ public class UserInterface extends JPanel{
 					}
 				}
 			} else if(e.getSource() == addMovie) {
-				controller.addMovie();
-				controller.sort(currentComp);
-				update();
+				JFrame frame = new JFrame();
+				MoviePane moviePane = new MoviePane(controller, frame, UserInterface.this);
+				frame.add(moviePane);
+				frame.pack();
+				frame.setVisible(true);
+
 			} else if(e.getSource() == delete && listOfMovies.getSelectedIndex() >= 0) {
 				controller.removeMovie(listOfMovies.getSelectedValue());
 
@@ -250,6 +257,17 @@ public class UserInterface extends JPanel{
 			} else if(e.getSource() == goBack) {
 				update();
 				goBack.setEnabled(false);
+			} else if(e.getSource() == editMovie) {
+				if(listOfMovies.getSelectedIndex() > -1) {
+					JFrame frame = new JFrame();
+					EditMoviePane editMoviePane = new EditMoviePane(controller, frame, UserInterface.this, listOfMovies.getSelectedValue());
+					frame.add(editMoviePane);
+					frame.pack();
+					frame.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(null, "Du har inte markerat någon film att redigera.");
+				}
+
 			}
 		}
 		

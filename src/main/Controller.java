@@ -39,7 +39,21 @@ public class Controller {
 					Double.parseDouble(res[5]), 
 					Integer.parseInt(res[6]));
 		
-		library.add(movie);
+		addMovie(movie);
+	}
+	
+	public void addMovie(Movie movie) {
+		boolean add = true;
+		for(int i = 0; i < library.getList().size(); i++) {
+			if(movie.compareTo(library.getList().get(i)) == 0) {
+				add = false;
+			}
+		}
+		if(add) {
+			library.add(movie);
+		} else {
+			JOptionPane.showMessageDialog(null, "Det finns redan en film med samma rubrik och av samma typ.");
+		}
 	}
 	
 	public void removeMovie(Movie movie) {
