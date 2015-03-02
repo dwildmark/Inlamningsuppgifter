@@ -69,7 +69,7 @@ public class Library {
 	public void binarySearch(String searchString) {
 		searchList.clear();
 		if(searchString.length() != 0) {
-			binarySearch(list, searchString, 0, list.size());
+			binarySearch(list, searchString, 0, list.size() - 1);
 		}
 	}
 
@@ -77,18 +77,9 @@ public class Library {
 			int max) {
 		if (min < max) {
 			int mid = (max + min) / 2;
-			if (movieList.get(mid).getTitle().toLowerCase().contains(searchString.toLowerCase())) {
+			if (movieList.get(mid).getTitle().toLowerCase()
+					.equals(searchString.toLowerCase())) {
 				searchList.add(movieList.get(mid));
-				int key = mid + 1;
-				while(movieList.get(key).getTitle().toLowerCase().contains(searchString.toLowerCase())){
-					searchList.add(movieList.get(key));
-					key++;
-				}
-				key = mid - 1;
-				while(movieList.get(key).getTitle().toLowerCase().contains(searchString.toLowerCase())) {
-					searchList.add(movieList.get(key));
-					key--;
-				}
 			} else if (movieList.get(mid).getTitle().compareTo(searchString) > 0) {
 				binarySearch(movieList, searchString, min, mid - 1);
 			} else {

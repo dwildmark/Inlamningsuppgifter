@@ -18,9 +18,10 @@ import javax.swing.*;
 public class UserInterface extends JPanel{
 	private JPanel center, west, topButtonPanel, listPanel, searchPanel, actorsNLength;
 	private JButton title, type, genre, actors, length, director, 
-	rating, openFile, saveFile, searchButton, sort, shuffle, delete, addMovie;
-	private JRadioButton rbQuick, rbBubble;
-	private ButtonGroup bgSorting;
+	rating, openFile, saveFile, searchButton, sort, shuffle, 
+	delete, addMovie, goBack;
+	private JRadioButton rbQuick, rbBubble, rbLinear, rbBinary;
+	private ButtonGroup bgSorting, bgSearchMethod;
 	private JList<Movie> listOfMovies;
 	private JTextField searchField;
 	private Comparator<Movie> currentComp;
@@ -49,11 +50,15 @@ public class UserInterface extends JPanel{
 		saveFile = new JButton("Spara fil");
 		searchButton = new JButton("Sök:");
 		sort = new JButton("Sortera");
+		goBack = new JButton("Tillbaka");
 		shuffle = new JButton("Blanda");
 		delete = new JButton("Radera");
 		addMovie = new JButton("Lägg till film");
 		rbQuick = new JRadioButton("Snabb sortering");
 		rbBubble = new JRadioButton("Bubble-sortering");
+		rbLinear = new JRadioButton("Linjär sökning");
+		rbBinary = new JRadioButton("Binär sökning");
+		bgSearchMethod = new ButtonGroup();
 		bgSorting = new ButtonGroup();
 		searchField = new JTextField();
 		listOfMovies = new JList<Movie>();
@@ -67,6 +72,7 @@ public class UserInterface extends JPanel{
 		shuffle.setPreferredSize(leftBtns);
 		delete.setPreferredSize(leftBtns);
 		addMovie.setPreferredSize(leftBtns);
+		goBack.setPreferredSize(leftBtns);
 		searchButton.setPreferredSize(new Dimension(80, 40));
 		searchField.setPreferredSize(new Dimension(100, 40));
 		ButtonListener btnListener = new ButtonListener();
@@ -84,10 +90,13 @@ public class UserInterface extends JPanel{
 		director.addActionListener(srtListener);
 		rating.addActionListener(srtListener);
 		sort.addActionListener(btnListener);
+		goBack.addActionListener(btnListener);
 		searchButton.addActionListener(btnListener);
 		searchField.addKeyListener(kListener);
 		bgSorting.add(rbBubble);
 		bgSorting.add(rbQuick);
+		bgSearchMethod.add(rbBinary);
+		bgSearchMethod.add(rbLinear);
 		setLayout(new BorderLayout());
 		center.setLayout(new BorderLayout());
 		west.setLayout(new FlowLayout());
@@ -113,7 +122,9 @@ public class UserInterface extends JPanel{
 		west.add(saveFile);
 		west.add(Box.createRigidArea(new Dimension(180, 40)));
 		west.add(searchPanel);
-		west.add(Box.createRigidArea(new Dimension(180, 40)));
+		west.add(rbBinary);
+		west.add(rbLinear);
+		west.add(goBack);
 		west.add(sort);
 		west.add(shuffle);
 		west.add(Box.createRigidArea(new Dimension(180, 40)));
@@ -128,6 +139,8 @@ public class UserInterface extends JPanel{
 		
 		currentComp = new TitleAsc();
 		rbQuick.setSelected(true);
+		rbLinear.setSelected(true);
+		goBack.setEnabled(false);
 		
 	}
 	
@@ -230,8 +243,13 @@ public class UserInterface extends JPanel{
 				controller.sort(currentComp);
 				update();
 			} else if(e.getSource() == searchButton) {
+				controller.setSearchMethod(rbBinary.isSelected());
 				controller.search(searchField.getText());
+				goBack.setEnabled(true);
 				updateSearch();
+			} else if(e.getSource() == goBack) {
+				update();
+				goBack.setEnabled(false);
 			}
 		}
 		
@@ -315,7 +333,9 @@ public class UserInterface extends JPanel{
 		public void keyReleased(KeyEvent e) {
 			// TODO Auto-generated method stub
 			if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				controller.setSearchMethod(rbBinary.isSelected());
 				controller.search(searchField.getText());
+				goBack.setEnabled(true);
 				updateSearch();
 			}
 		}
