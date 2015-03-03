@@ -13,7 +13,6 @@ public class Sort {
 				}
 			}
 		}
-//		bubbleSort(array, comp, 0, 0);
 	}
 	
 //	public static void bubbleSort(ArrayList<Movie> array, Comparator<Movie> comp, int i, int j) {

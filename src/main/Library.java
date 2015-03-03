@@ -77,8 +77,8 @@ public class Library {
 			int max) {
 		if (min <= max) {
 			int mid = (max + min) / 2;
-			if (movieList.get(mid).getTitle().toLowerCase()
-					.equals(searchString.toLowerCase())) {
+			if (movieList.get(mid).getTitle().toLowerCase().substring(0, Math.min(searchString.length(), movieList.get(mid).getTitle().length()))
+					.equals(searchString.toLowerCase().substring(0, Math.min(searchString.length(), movieList.get(mid).getTitle().length())))) {
 				searchList.add(movieList.get(mid));
 			} else if (movieList.get(mid).getTitle().compareTo(searchString) > 0) {
 				binarySearch(movieList, searchString, min, mid - 1);
