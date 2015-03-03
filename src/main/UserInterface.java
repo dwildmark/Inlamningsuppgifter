@@ -8,10 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Comparator;
-
-import javafx.stage.FileChooser;
 
 import javax.swing.*;
 
