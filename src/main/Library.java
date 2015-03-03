@@ -69,7 +69,7 @@ public class Library {
 	public void binarySearch(String searchString) {
 		searchList.clear();
 		if(searchString.length() != 0) {
-			binarySearch(list, searchString, 0, list.size());
+			binarySearch(list, searchString, 0, list.size() - 1);
 		}
 	}
 

@@ -58,23 +58,31 @@ public class MoviePane extends JPanel implements ActionListener{
 	private void submitMovie() {
 		String title, genre, director;
 		String [] actors;
-		Double length, rating;
+		Double length = null, rating = null;
 		int dvdOrBlueray;
+		boolean accept = true;
 		title = inTitle.getText();
 		genre = inGenre.getText();
 		director = inDirector.getText();
 		actors = inActors.getText().split(", ");
-		length = Double.parseDouble(inLength.getText());
-		rating = Double.parseDouble(inRating.getText());
+		try {
+			length = Double.parseDouble(inLength.getText());
+			rating = Double.parseDouble(inRating.getText());
+		} catch(NumberFormatException e) {
+			accept = false;
+			JOptionPane.showMessageDialog(null, "Längd och betyg måste bestå av decimala tal.");
+		}
 		if(rbDvd.isSelected()) {
 			dvdOrBlueray = 0;
 		} else {
 			dvdOrBlueray = 1;
 		}
-		Movie movie = new Movie(title, genre, actors, length, director, rating, dvdOrBlueray);
-		controller.addMovie(movie);
-		controller.sort(new TitleAsc());
-		ui.update();
+		if(accept) {
+			Movie movie = new Movie(title, genre, actors, length, director, rating, dvdOrBlueray);
+			controller.addMovie(movie);
+			controller.sort(new TitleAsc());
+			ui.update();
+		}
 	}
 	
 	public void actionPerformed(ActionEvent e) {
