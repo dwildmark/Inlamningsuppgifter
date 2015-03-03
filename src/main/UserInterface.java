@@ -237,6 +237,7 @@ public class UserInterface extends JPanel{
 				MoviePane moviePane = new MoviePane(controller, frame, UserInterface.this);
 				frame.add(moviePane);
 				frame.pack();
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
 
 			} else if(e.getSource() == delete && listOfMovies.getSelectedIndex() >= 0) {
@@ -263,6 +264,7 @@ public class UserInterface extends JPanel{
 					EditMoviePane editMoviePane = new EditMoviePane(controller, frame, UserInterface.this, listOfMovies.getSelectedValue());
 					frame.add(editMoviePane);
 					frame.pack();
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					frame.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "Du har inte markerat någon film att redigera.");

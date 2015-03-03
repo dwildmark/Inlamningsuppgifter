@@ -69,13 +69,13 @@ public class Library {
 	public void binarySearch(String searchString) {
 		searchList.clear();
 		if(searchString.length() != 0) {
-			binarySearch(list, searchString, 0, list.size() - 1);
+			binarySearch(list, searchString, 0, list.size());
 		}
 	}
 
 	public void binarySearch(ArrayList<Movie> movieList, String searchString, int min,
 			int max) {
-		if (min < max) {
+		if (min <= max) {
 			int mid = (max + min) / 2;
 			if (movieList.get(mid).getTitle().toLowerCase()
 					.equals(searchString.toLowerCase())) {
