@@ -53,6 +53,7 @@ public class MoviePane extends JPanel implements ActionListener{
 		radioButtons.add(rbBlueray);
 		add(radioButtons);
 		add(submitBtn);
+		rbDvd.setSelected(true);
 		
 	}
 	private void submitMovie() {
